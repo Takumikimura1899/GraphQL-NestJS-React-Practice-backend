@@ -11,8 +11,10 @@ export class TaskResolver {
 
   // @Query()デコレータを使用して、getTasksメソッドをGraphQLのクエリとして公開する。
   @Query(() => [TaskModel], { nullable: 'items' })
-  async getTasks(): Promise<Task[]> {
-    return await this.taskService.getTasks();
+  async getTasks(
+    @Args('userId', { type: () => Int }) userId: number,
+  ): Promise<Task[]> {
+    return await this.taskService.getTasks(userId);
   }
 
   // @Mutation()デコレータを使用して、createTaskメソッドをGraphQLのミューテーションとして公開する。
